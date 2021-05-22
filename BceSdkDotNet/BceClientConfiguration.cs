@@ -96,7 +96,7 @@ namespace BaiduBce
 
         public ISigner Signer { get; set; }
 
-        public SignOptions SignOptions { get; set; }
+        public SignOptions SignOptions { get; set; } = new SignOptions();
 
         /// <summary>
         /// The retry policy for failed requests.
@@ -284,79 +284,44 @@ namespace BaiduBce
         // How to: Determine Which .NET Framework Versions Are Installed
         private static string GetFrameworkVersion()
         {
-            using (RegistryKey ndpKey =
-                Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
-            {
-                if (ndpKey == null)
-                {
-                    return "Unknown(NDP key not found)";
-                }
-                using (RegistryKey v4Key = ndpKey.OpenSubKey("v4"))
-                {
-                    if (Environment.Version.Major >= 4 && v4Key != null)
-                    {
-                        return BceClientConfiguration.GetFrameworkVersionAfter4(v4Key);
-                    }
-                }
-                using (RegistryKey v35Key = ndpKey.OpenSubKey("v3.5"))
-                {
-                    if (v35Key != null)
-                    {
-                        return "3.5";
-                    }
-                }
-                using (RegistryKey v30Key = ndpKey.OpenSubKey("v3.0"))
-                {
-                    if (v30Key != null)
-                    {
-                        return "3.0";
-                    }
-                }
-                using (RegistryKey v20Key = ndpKey.OpenSubKey("v2.0.50727"))
-                {
-                    if (v20Key != null)
-                    {
-                        return "2.0";
-                    }
-                }
-            }
-            return "Unknown";
+            //TODO: 先固定
+            return ".NET 5.0.0"; 
         }
 
-        private static string GetFrameworkVersionAfter4(RegistryKey v4Key)
-        {
-            using (RegistryKey fullKey = v4Key.OpenSubKey("Full"))
-            {
-                if (fullKey != null)
-                {
-                    object release = fullKey.GetValue("Release");
-                    if (release != null)
-                    {
-                        int releaseValue = Convert.ToInt32(release);
-                        if (releaseValue > 393273)
-                        {
-                            return ">4.6RC";
-                        }
-                        if (releaseValue == 393273)
-                        {
-                            return "4.6RC";
-                        }
-                        if (releaseValue >= 379893)
-                        {
-                            return "4.5.2";
-                        }
-                        if (releaseValue >= 378675)
-                        {
-                            return "4.5.1";
-                        }
-                        if (releaseValue >= 378389)
-                        {
-                            return "4.5";
-                        }
-                    }
-                }
-            }
-            return "4.0";
-        }
+        //private static string GetFrameworkVersionAfter4(RegistryKey v4Key)
+        //{
+        //    using (RegistryKey fullKey = v4Key.OpenSubKey("Full"))
+        //    {
+        //        if (fullKey != null)
+        //        {
+        //            object release = fullKey.GetValue("Release");
+        //            if (release != null)
+        //            {
+        //                int releaseValue = Convert.ToInt32(release);
+        //                if (releaseValue > 393273)
+        //                {
+        //                    return ">4.6RC";
+        //                }
+        //                if (releaseValue == 393273)
+        //                {
+        //                    return "4.6RC";
+        //                }
+        //                if (releaseValue >= 379893)
+        //                {
+        //                    return "4.5.2";
+        //                }
+        //                if (releaseValue >= 378675)
+        //                {
+        //                    return "4.5.1";
+        //                }
+        //                if (releaseValue >= 378389)
+        //                {
+        //                    return "4.5";
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return "4.0";
+        //}
     }
 }

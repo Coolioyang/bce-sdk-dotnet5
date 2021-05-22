@@ -48,7 +48,7 @@ namespace BaiduBce.Auth
         /// <summary>
         /// The set of headers to be signed.
         /// </summary>
-        public HashSet<string> HeadersToSign { get; set; }
+        public HashSet<string> HeadersToSign { get; set; } = new HashSet<string>();
 
         /// <summary>
         /// The time when the signature was created.
