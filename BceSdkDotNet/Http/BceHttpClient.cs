@@ -93,7 +93,10 @@ namespace BaiduBce.Http
             {
                 if (e.Status != WebExceptionStatus.ProtocolError)
                 {
+
+#pragma warning disable CA2200 // 再次引发以保留堆栈详细信息
                     throw e;
+#pragma warning restore CA2200 // 再次引发以保留堆栈详细信息
                 }
                 using (var response = e.Response as HttpWebResponse)
                 {

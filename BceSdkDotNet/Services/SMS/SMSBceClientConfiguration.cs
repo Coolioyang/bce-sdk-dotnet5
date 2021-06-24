@@ -16,5 +16,11 @@ namespace BaiduBce.Services.SMS
             SignOptions.HeadersToSign.Add("host");
             SignOptions.HeadersToSign.Add("x-bce-date");
         }
+
+        public static SMSBceClientConfiguration Default()
+        {
+            return new SMSBceClientConfiguration("e0b6afef3bd140bf92b55cdea62c2651", "cb8fb176050e47db9b16a2d8e2f3b7c8");
+        }
+
     }
 }
